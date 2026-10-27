@@ -482,12 +482,15 @@
 
       // Update Nav Tabs Active Styling
       document.querySelectorAll('[data-nav-tab]').forEach(tab => {
-        if (tab.dataset.navTab === tabName) {
-          tab.classList.add('text-blue-600', 'dark:text-blue-400', 'border-blue-600', 'dark:border-blue-400', 'font-semibold');
-          tab.classList.remove('text-slate-500', 'dark:text-slate-400', 'border-transparent');
+        const isCurrent = tab.dataset.navTab === tabName;
+        tab.classList.toggle('nav-tab-active', isCurrent);
+        
+        if (isCurrent) {
+          tab.classList.add('bg-white', 'dark:bg-slate-800', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm', 'border-slate-200/80', 'dark:border-slate-700/80', 'font-bold');
+          tab.classList.remove('text-slate-600', 'dark:text-slate-400', 'font-semibold', 'hover:bg-white/60', 'dark:hover:bg-slate-800/60');
         } else {
-          tab.classList.remove('text-blue-600', 'dark:text-blue-400', 'border-blue-600', 'dark:border-blue-400', 'font-semibold');
-          tab.classList.add('text-slate-500', 'dark:text-slate-400', 'border-transparent');
+          tab.classList.remove('bg-white', 'dark:bg-slate-800', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm', 'border-slate-200/80', 'dark:border-slate-700/80', 'font-bold');
+          tab.classList.add('text-slate-600', 'dark:text-slate-400', 'font-semibold', 'hover:bg-white/60', 'dark:hover:bg-slate-800/60');
         }
       });
 

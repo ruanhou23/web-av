@@ -40,53 +40,70 @@
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-200">
 
   <!-- Top Sticky Navigation Bar -->
-  <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm transition-all duration-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-4">
         
         <!-- Logo & Branding -->
-        <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
-            <i class="fa-solid fa-graduation-cap text-lg"></i>
+        <div class="flex items-center space-x-3 cursor-pointer group" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 ring-2 ring-blue-500/20 group-hover:scale-105 group-hover:rotate-3 transition-all duration-300">
+            <i class="fa-solid fa-graduation-cap text-lg sm:text-xl"></i>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <span class="font-black text-xl tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">VERBS 360</span>
-              <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300">Chuẩn 360 Từ</span>
+              <span class="font-black text-lg sm:text-xl tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 dark:from-blue-400 dark:via-indigo-300 dark:to-violet-400 bg-clip-text text-transparent">
+                DAILY ENGLISH
+              </span>
+              <span class="inline-flex items-center px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/80 shadow-xs">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>PRO
+              </span>
             </div>
-            <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium hidden sm:block">Động từ bất quy tắc kèm hình ảnh & ví dụ</p>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold tracking-wide">Luyện Tiếng Anh Mỗi Ngày</p>
+              <span class="hidden md:inline text-slate-300 dark:text-slate-700">•</span>
+              <span class="hidden md:inline-flex text-[10px] text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.2 rounded">360 Động từ + 1,000 IT Terms</span>
+            </div>
           </div>
         </div>
 
-        <!-- Quick Stats Badge -->
-        <div class="hidden lg:flex items-center space-x-4 bg-slate-100/80 dark:bg-slate-800/80 px-4 py-1.5 rounded-full border border-slate-200/60 dark:border-slate-700/60 text-xs font-semibold">
+        <!-- Quick Stats Dashboard Pill -->
+        <div class="hidden xl:flex items-center space-x-3.5 bg-slate-100/80 dark:bg-slate-800/80 px-4 py-2 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 text-xs font-semibold shadow-inner">
           <div class="flex items-center space-x-1.5 text-emerald-600 dark:text-emerald-400" title="Đã thuộc">
-            <i class="fa-solid fa-circle-check"></i>
-            <span>Thuộc: <strong id="stat-mastered" class="font-bold">0</strong></span>
+            <i class="fa-solid fa-circle-check text-sm"></i>
+            <span>Thuộc: <strong id="stat-mastered" class="font-bold text-slate-900 dark:text-white">0</strong></span>
           </div>
-          <span class="text-slate-300 dark:text-slate-700">|</span>
+          <span class="text-slate-300 dark:text-slate-600">|</span>
           <div class="flex items-center space-x-1.5 text-rose-500 dark:text-rose-400" title="Cần ôn tập">
-            <i class="fa-solid fa-rotate-right"></i>
-            <span>Cần ôn: <strong id="stat-review" class="font-bold">0</strong></span>
+            <i class="fa-solid fa-rotate-right text-sm"></i>
+            <span>Cần ôn: <strong id="stat-review" class="font-bold text-slate-900 dark:text-white">0</strong></span>
           </div>
-          <span class="text-slate-300 dark:text-slate-700">|</span>
+          <span class="text-slate-300 dark:text-slate-600">|</span>
           <div class="flex items-center space-x-1.5 text-amber-500 dark:text-amber-400" title="Đã lưu sao">
-            <i class="fa-solid fa-star"></i>
-            <span>Đã lưu: <strong id="stat-saved" class="font-bold">0</strong></span>
+            <i class="fa-solid fa-star text-sm"></i>
+            <span>Đã lưu: <strong id="stat-saved" class="font-bold text-slate-900 dark:text-white">0</strong></span>
           </div>
           <div class="flex items-center space-x-2 pl-2 border-l border-slate-200 dark:border-slate-700">
-            <div class="w-16 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-              <div id="stat-progress-bar" class="h-full bg-blue-600 rounded-full transition-all duration-300" style="width: 0%"></div>
+            <div class="w-20 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+              <div id="stat-progress-bar" class="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
-            <span id="stat-percent" class="text-slate-500 dark:text-slate-400 font-bold">0%</span>
+            <span id="stat-percent" class="text-xs font-bold text-blue-600 dark:text-blue-400">0%</span>
           </div>
         </div>
 
         <!-- Action Controls -->
         <div class="flex items-center space-x-2 sm:space-x-3">
+          
+          <!-- GitHub Link -->
+          <a href="https://github.com/ruanhou23/web-av" target="_blank" rel="noopener noreferrer"
+             class="hidden sm:inline-flex items-center space-x-2 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all border border-slate-200/80 dark:border-slate-700/80 btn-press"
+             title="Xem mã nguồn trên GitHub">
+            <i class="fa-brands fa-github text-base"></i>
+            <span class="hidden md:inline">GitHub</span>
+          </a>
+
           <!-- Voice Accent Selector -->
-          <div class="hidden sm:flex items-center space-x-1.5 bg-slate-100 dark:bg-slate-800 px-2.5 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-700/80">
-            <i class="fa-solid fa-headphones text-slate-400 text-xs"></i>
+          <div class="flex items-center space-x-1.5 bg-slate-100 dark:bg-slate-800 px-3 py-2 rounded-xl border border-slate-200/80 dark:border-slate-700/80 text-xs font-semibold shadow-xs">
+            <i class="fa-solid fa-headphones text-blue-500 text-xs"></i>
             <select id="accent-select" class="bg-transparent text-xs font-semibold text-slate-700 dark:text-slate-300 focus:outline-none cursor-pointer">
               <option value="en-US">US (Mỹ)</option>
               <option value="en-GB">UK (Anh)</option>
@@ -94,48 +111,68 @@
           </div>
 
           <!-- Theme Toggle -->
-          <button id="theme-toggle-btn" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-all btn-press border border-slate-200/60 dark:border-slate-700/60" title="Chuyển chế độ Sáng / Tối">
-            <i class="fa-solid fa-moon text-slate-600 text-lg"></i>
+          <button id="theme-toggle-btn" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center transition-all btn-press border border-slate-200/80 dark:border-slate-700/80 text-slate-600 dark:text-slate-300 shadow-xs" title="Chuyển chế độ Sáng / Tối">
+            <i class="fa-solid fa-moon text-lg"></i>
           </button>
         </div>
 
       </div>
     </div>
 
-    <!-- Secondary Sticky Sub-Navbar: Learning Tabs -->
-    <div class="border-t border-slate-200/80 dark:border-slate-800/80 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+    <!-- Secondary Sticky Sub-Navbar: Segmented Learning Tabs -->
+    <div class="border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/70 dark:bg-slate-900/70 backdrop-blur-md py-2">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav class="flex space-x-1 sm:space-x-8 overflow-x-auto py-2 no-scrollbar" aria-label="Tabs">
-          <button data-nav-tab="explorer" class="px-3 py-2 text-sm font-semibold rounded-lg border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 flex items-center space-x-2 whitespace-nowrap">
-            <i class="fa-solid fa-book-open"></i>
+        <nav class="flex items-center space-x-1.5 sm:space-x-2 overflow-x-auto py-1 no-scrollbar" aria-label="Tabs">
+          
+          <!-- Tab 1: Tra cứu 360 từ -->
+          <button data-nav-tab="explorer" class="nav-tab-btn nav-tab-active px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm border border-slate-200/80 dark:border-slate-700/80">
+            <span class="w-6 h-6 rounded-lg bg-blue-100 dark:bg-blue-900/60 flex items-center justify-center text-blue-600 dark:text-blue-400">
+              <i class="fa-solid fa-book-open text-xs"></i>
+            </span>
             <span>Tra cứu 360 từ</span>
           </button>
 
-          <button data-nav-tab="flashcards" class="px-3 py-2 text-sm font-semibold rounded-lg border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 whitespace-nowrap">
-            <i class="fa-solid fa-clone"></i>
-            <span>Flashcards lật thẻ</span>
+          <!-- Tab 2: Flashcards 3D -->
+          <button data-nav-tab="flashcards" class="nav-tab-btn px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60">
+            <span class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-500">
+              <i class="fa-solid fa-clone text-xs"></i>
+            </span>
+            <span>Flashcards 3D</span>
           </button>
 
-          <button data-nav-tab="quiz" class="px-3 py-2 text-sm font-semibold rounded-lg border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 whitespace-nowrap">
-            <i class="fa-solid fa-circle-question"></i>
-            <span>Luyện trắc nghiệm</span>
+          <!-- Tab 3: Luyện trắc nghiệm -->
+          <button data-nav-tab="quiz" class="nav-tab-btn px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60">
+            <span class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-amber-500">
+              <i class="fa-solid fa-circle-question text-xs"></i>
+            </span>
+            <span>Trắc nghiệm Quiz</span>
           </button>
 
-          <button data-nav-tab="typing" class="px-3 py-2 text-sm font-semibold rounded-lg border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 whitespace-nowrap">
-            <i class="fa-solid fa-keyboard"></i>
+          <!-- Tab 4: Luyện gõ từ -->
+          <button data-nav-tab="typing" class="nav-tab-btn px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60">
+            <span class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-emerald-500">
+              <i class="fa-solid fa-keyboard text-xs"></i>
+            </span>
             <span>Luyện gõ từ</span>
           </button>
 
-          <button data-nav-tab="patterns" class="px-3 py-2 text-sm font-semibold rounded-lg border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 flex items-center space-x-2 whitespace-nowrap">
-            <i class="fa-solid fa-layer-group"></i>
-            <span>4 Nhóm quy tắc & Mẹo</span>
+          <!-- Tab 5: 4 Nhóm quy tắc -->
+          <button data-nav-tab="patterns" class="nav-tab-btn px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60">
+            <span class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-violet-500">
+              <i class="fa-solid fa-layer-group text-xs"></i>
+            </span>
+            <span>4 Nhóm quy tắc</span>
           </button>
 
-          <button data-nav-tab="it-english" class="px-3.5 py-2 text-sm font-bold rounded-lg border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center space-x-2 whitespace-nowrap group">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <i class="fa-solid fa-laptop-code text-indigo-500"></i>
-            <span class="bg-gradient-to-r from-indigo-600 to-cyan-500 bg-clip-text text-transparent font-extrabold">Tiếng Anh CNTT</span>
-            <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300">1,000 thuật ngữ</span>
+          <!-- Tab 6: Tiếng Anh CNTT (Special Featured Tab) -->
+          <button data-nav-tab="it-english" class="nav-tab-btn px-4 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap text-slate-700 dark:text-slate-300 hover:bg-white/80 dark:hover:bg-slate-800/80 group">
+            <span class="w-6 h-6 rounded-lg bg-gradient-to-tr from-indigo-500 to-cyan-500 flex items-center justify-center text-white shadow-xs">
+              <i class="fa-solid fa-laptop-code text-xs"></i>
+            </span>
+            <span class="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 bg-clip-text text-transparent font-black">Tiếng Anh CNTT</span>
+            <span class="px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-800/80 shadow-2xs">
+              1,000 từ
+            </span>
           </button>
         </nav>
       </div>

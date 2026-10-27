@@ -109,3 +109,41 @@ body {
 .animate-gentle-bounce {
   animation: gentle-bounce 3s ease-in-out infinite;
 }
+
+/* Polished Navigation Menu & Tabs */
+.nav-tab-btn {
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.nav-tab-btn:hover {
+  transform: translateY(-1px);
+}
+
+.nav-tab-btn:active {
+  transform: translateY(0);
+}
+
+.nav-tab-btn.nav-tab-active {
+  box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.12), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dark .nav-tab-btn.nav-tab-active {
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+}
+
+/* Faded edges for horizontal scroll menu on mobile */
+.nav-scroll-container {
+  mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
