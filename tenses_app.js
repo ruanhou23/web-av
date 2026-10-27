@@ -683,6 +683,18 @@
         }
       }
 
+      const subVisualBtn = document.getElementById('subnav-tenses-visual-btn');
+      const subQuizBtn = document.getElementById('subnav-tenses-quiz-btn');
+      if (subVisualBtn && subQuizBtn) {
+        if (view === 'visual') {
+          subVisualBtn.className = 'sub-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/80 shadow-2xs flex items-center gap-1.5';
+          subQuizBtn.className = 'sub-tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 transition-all flex items-center gap-1.5';
+        } else {
+          subQuizBtn.className = 'sub-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/80 shadow-2xs flex items-center gap-1.5';
+          subVisualBtn.className = 'sub-tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 transition-all flex items-center gap-1.5';
+        }
+      }
+
       if (visualWrapper) visualWrapper.classList.toggle('hidden', view !== 'visual');
       if (quizWrapper) quizWrapper.classList.toggle('hidden', view !== 'quiz');
 

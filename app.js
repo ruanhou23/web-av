@@ -278,6 +278,19 @@
         });
       });
 
+      // Category Group Buttons (Gom nhóm danh mục)
+      document.querySelectorAll('[data-group]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (!btn.dataset.navTab) {
+            const group = btn.dataset.group;
+            if (group === 'verbs') this.switchTab('explorer');
+            else if (group === 'practice') this.switchTab('games');
+            else if (group === 'tenses') this.switchTab('tenses');
+            else if (group === 'it') this.switchTab('it-english');
+          }
+        });
+      });
+
       // Search input
       const searchInput = document.getElementById('search-input');
       if (searchInput) {
@@ -480,17 +493,54 @@
       AudioService.playClickSound();
       AppState.currentTab = tabName;
 
-      // Update Nav Tabs Active Styling
-      document.querySelectorAll('[data-nav-tab]').forEach(tab => {
-        const isCurrent = tab.dataset.navTab === tabName;
-        tab.classList.toggle('nav-tab-active', isCurrent);
-        
-        if (isCurrent) {
-          tab.classList.add('bg-white', 'dark:bg-slate-800', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm', 'border-slate-200/80', 'dark:border-slate-700/80', 'font-bold');
-          tab.classList.remove('text-slate-600', 'dark:text-slate-400', 'font-semibold', 'hover:bg-white/60', 'dark:hover:bg-slate-800/60');
+      // Map tabName to parent category group
+      const TAB_GROUPS = {
+        'explorer': 'verbs',
+        'patterns': 'verbs',
+        'flashcards': 'verbs',
+        'tenses': 'tenses',
+        'games': 'practice',
+        'quiz': 'practice',
+        'typing': 'practice',
+        'it-english': 'it'
+      };
+      const activeGroup = TAB_GROUPS[tabName] || 'verbs';
+
+      // Update Category Group Buttons Styling
+      document.querySelectorAll('[data-group]').forEach(groupBtn => {
+        const isCurrentGroup = groupBtn.dataset.group === activeGroup;
+        if (isCurrentGroup) {
+          groupBtn.classList.add('bg-white', 'dark:bg-slate-800', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm', 'border-slate-200/80', 'dark:border-slate-700/80', 'font-bold');
+          groupBtn.classList.remove('text-slate-600', 'dark:text-slate-400', 'font-semibold', 'hover:bg-white/60', 'dark:hover:bg-slate-800/60');
         } else {
-          tab.classList.remove('bg-white', 'dark:bg-slate-800', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm', 'border-slate-200/80', 'dark:border-slate-700/80', 'font-bold');
-          tab.classList.add('text-slate-600', 'dark:text-slate-400', 'font-semibold', 'hover:bg-white/60', 'dark:hover:bg-slate-800/60');
+          groupBtn.classList.remove('bg-white', 'dark:bg-slate-800', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm', 'border-slate-200/80', 'dark:border-slate-700/80', 'font-bold');
+          groupBtn.classList.add('text-slate-600', 'dark:text-slate-400', 'font-semibold', 'hover:bg-white/60', 'dark:hover:bg-slate-800/60');
+        }
+      });
+
+      // Show/Hide matching subnav strip
+      const subnavs = ['verbs', 'tenses', 'practice', 'it'];
+      subnavs.forEach(g => {
+        const subnavEl = document.getElementById(`subnav-${g}`);
+        if (subnavEl) {
+          if (g === activeGroup) {
+            subnavEl.classList.remove('hidden');
+          } else {
+            subnavEl.classList.add('hidden');
+          }
+        }
+      });
+
+      // Update Sub-tab Buttons Active Styling
+      document.querySelectorAll('.sub-tab-btn[data-nav-tab]').forEach(subBtn => {
+        const isCurrentSub = subBtn.dataset.navTab === tabName;
+        subBtn.classList.toggle('sub-tab-active', isCurrentSub);
+        if (isCurrentSub) {
+          subBtn.classList.add('bg-blue-100', 'dark:bg-blue-900/60', 'text-blue-700', 'dark:text-blue-300', 'font-bold', 'border-blue-200', 'dark:border-blue-800/80', 'shadow-2xs');
+          subBtn.classList.remove('text-slate-600', 'dark:text-slate-400', 'font-semibold');
+        } else {
+          subBtn.classList.remove('bg-blue-100', 'dark:bg-blue-900/60', 'text-blue-700', 'dark:text-blue-300', 'font-bold', 'border-blue-200', 'dark:border-blue-800/80', 'shadow-2xs');
+          subBtn.classList.add('text-slate-600', 'dark:text-slate-400', 'font-semibold');
         }
       });
 
