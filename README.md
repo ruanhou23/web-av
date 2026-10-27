@@ -45,6 +45,10 @@ Trang web học tập tương tác hiện đại dành cho **đầy đủ 360 đ
      - Bảng lưới 12 mảnh ghép puzzle (4 động từ x 3 dạng V1, V2, V3).
      - Người chơi nhấp chọn 3 mảnh ghép thuộc cùng 1 động từ để loại bỏ các ô và nhận điểm thưởng combo.
      - Đồng hồ đếm thời gian phá kỷ lục và bảng xếp hạng High Score.
+   - **Chế độ 3: Word Search 10x10 (Trò chơi khoanh chữ ma trận 10x10)**:
+     - Ma trận ô chữ 10x10 chứa 6 - 8 động từ bất quy tắc (V1, V2, V3) ẩn giấu theo hàng ngang, dọc hoặc đường chéo.
+     - Hỗ trợ thao tác kéo vuốt mượt mà hoặc bấm chọn chữ cái đầu và chữ cái cuối để khoanh từ.
+     - Bút dạ quang đa sắc màu đánh dấu các từ đã tìm thấy, tích hợp âm thanh chiến thắng và nút Gợi ý 💡 thông minh.
 
 5. **Luyện tập Trắc nghiệm (Quiz Mode)**:
    - 4 dạng câu hỏi: Tìm V2, Tìm V3, Tìm nghĩa tiếng Việt, Điền từ vào câu ví dụ.

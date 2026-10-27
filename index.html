@@ -660,14 +660,18 @@
           <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             
             <!-- Game Mode Switcher -->
-            <div class="inline-flex p-1.5 rounded-2xl bg-black/30 backdrop-blur-md border border-white/20 shadow-inner">
-              <button id="game-mode-scramble-btn" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-emerald-700 shadow-sm transition-all flex items-center space-x-2">
+            <div class="inline-flex p-1.5 rounded-2xl bg-black/30 backdrop-blur-md border border-white/20 shadow-inner flex-wrap gap-1">
+              <button id="game-mode-scramble-btn" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-emerald-700 shadow-sm transition-all flex items-center space-x-1.5">
                 <i class="fa-solid fa-puzzle-piece"></i>
-                <span>Word Scramble (Ghép Chữ)</span>
+                <span>Word Scramble</span>
               </button>
-              <button id="game-mode-triplet-btn" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white/80 hover:text-white transition-all flex items-center space-x-2">
+              <button id="game-mode-triplet-btn" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white/80 hover:text-white transition-all flex items-center space-x-1.5">
                 <i class="fa-solid fa-shapes"></i>
-                <span>Triplet Match (Nối Bộ Ba)</span>
+                <span>Nối Bộ Ba</span>
+              </button>
+              <button id="game-mode-wordsearch-btn" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white/80 hover:text-white transition-all flex items-center space-x-1.5">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Khoanh Chữ 10x10</span>
               </button>
             </div>
 
@@ -820,6 +824,103 @@
             <button onclick="window.GameApp.startNewTripletGame()" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm shadow-xl shadow-emerald-500/25 transition-all btn-press inline-flex items-center space-x-2">
               <i class="fa-solid fa-rotate-right"></i>
               <span>Chơi Tiếp Ván Mới</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ========================================== -->
+      <!-- GAME 3: WORD SEARCH 10x10 (KHOANH CHỮ) -->
+      <!-- ========================================== -->
+      <div id="game-wordsearch-wrapper" class="hidden max-w-4xl mx-auto space-y-6">
+        
+        <!-- Controls & Status Bar -->
+        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded-lg bg-teal-100 dark:bg-teal-900/60 text-teal-700 dark:text-teal-300 text-xs font-black uppercase">
+                Ma trận 10x10
+              </span>
+              <h3 class="text-base font-black text-slate-800 dark:text-white">Khoanh Chữ Tìm Từ</h3>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Kéo chuột hoặc bấm chữ đầu & chữ cuối (ngang, dọc, chéo) để khoanh từ đúng.
+            </p>
+          </div>
+
+          <div class="flex items-center space-x-3 self-end sm:self-auto flex-wrap gap-y-2">
+            <!-- Words Found Counter -->
+            <div class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 flex items-center space-x-1.5">
+              <i class="fa-solid fa-circle-check text-emerald-500"></i>
+              <span id="ws-found-counter">0 / 7 từ</span>
+            </div>
+
+            <!-- Timer -->
+            <div class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 flex items-center space-x-1.5 font-mono">
+              <i class="fa-solid fa-stopwatch text-indigo-500"></i>
+              <span id="ws-timer-display">00:00</span>
+            </div>
+
+            <!-- Hint Button -->
+            <button id="ws-hint-btn" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 text-xs font-bold border border-amber-300 dark:border-amber-700 transition-all btn-press flex items-center space-x-1" title="Gợi ý chữ cái đầu của 1 từ">
+              <i class="fa-solid fa-lightbulb"></i>
+              <span>Gợi ý</span>
+            </button>
+
+            <!-- Restart Button -->
+            <button id="ws-restart-btn" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-all btn-press flex items-center space-x-1">
+              <i class="fa-solid fa-rotate-right"></i>
+              <span>Ván mới</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Active Game Area (10x10 Grid + Target Words List) -->
+        <div id="ws-active-area" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          <!-- 10x10 Interactive Matrix (8 cols on lg) -->
+          <div class="lg:col-span-8 bg-white dark:bg-slate-900 p-4 sm:p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-md">
+            <div id="ws-grid-container" class="grid grid-cols-10 gap-1 sm:gap-1.5 max-w-[460px] mx-auto select-none touch-none"></div>
+          </div>
+
+          <!-- Target Words List (4 cols on lg) -->
+          <div class="lg:col-span-4 bg-white dark:bg-slate-900 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-md space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Từ cần tìm:</h4>
+              <span class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400">V1 / V2 / V3</span>
+            </div>
+            
+            <div id="ws-word-list-container" class="space-y-2 max-h-[460px] overflow-y-auto pr-1"></div>
+          </div>
+
+        </div>
+
+        <!-- Victory Card -->
+        <div id="ws-win-card" class="hidden bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 border border-slate-200/80 dark:border-slate-800 shadow-2xl text-center space-y-6 animate-pop">
+          <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-teal-500 to-indigo-600 text-white flex items-center justify-center mx-auto text-5xl shadow-2xl shadow-teal-500/30 animate-gentle-bounce">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <div>
+            <h3 class="text-3xl font-black text-slate-900 dark:text-white">Tuyệt Vời! Đã Tìm Thấy Tất Cả Từ!</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 font-medium">Bạn đã hoàn thành xuất sắc thử thách khoanh chữ ma trận 10x10!</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 max-w-xs mx-auto">
+            <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-slate-800 border border-indigo-100 dark:border-slate-700">
+              <span class="text-xs text-slate-400 font-bold block mb-1">Thời gian</span>
+              <span id="ws-final-time" class="text-xl font-black text-indigo-600 dark:text-indigo-400">00:00</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-slate-800 border border-emerald-100 dark:border-slate-700">
+              <span class="text-xs text-slate-400 font-bold block mb-1">Số từ tìm được</span>
+              <span id="ws-final-count" class="text-xl font-black text-emerald-600 dark:text-emerald-400">7 / 7</span>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button onclick="window.GameApp.startNewWordSearchGame()" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-teal-600 to-indigo-600 hover:from-teal-700 hover:to-indigo-700 text-white font-black text-sm shadow-xl shadow-teal-500/25 transition-all btn-press inline-flex items-center space-x-2">
+              <i class="fa-solid fa-rotate-right"></i>
+              <span>Chơi Ván 10x10 Mới</span>
             </button>
           </div>
         </div>

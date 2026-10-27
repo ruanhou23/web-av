@@ -2,6 +2,7 @@
  * Puzzle Game Center - Trung Tâm Trò Chơi Tiếng Anh
  * Chế độ 1: Word Scramble Puzzle (Ghép chữ cái giải đố V1-V2-V3)
  * Chế độ 2: Triplet Match Puzzle (Ghép nối bộ ba V1 - V2 - V3)
+ * Chế độ 3: Word Search 10x10 (Trò chơi khoanh chữ ma trận 10x10)
  */
 
 (function () {
@@ -174,7 +175,7 @@
 
   // 3. Game Center State
   const GameState = {
-    activeMode: 'scramble', // 'scramble' or 'triplet'
+    activeMode: 'scramble', // 'scramble', 'triplet', or 'wordsearch'
     score: 0,
     streak: 0,
     highScore: parseInt(localStorage.getItem('verb360_puzzle_highscore') || '0'),
@@ -194,7 +195,18 @@
     tripletMatchesFound: 0,
     tripletTimer: 0,
     tripletInterval: null,
-    tripletMoves: 0
+    tripletMoves: 0,
+
+    // --- Word Search 10x10 State ---
+    wsGridSize: 10,
+    wsGrid: [], // 10x10 array of characters
+    wsWords: [], // array of { word, verb, form, meaning, found, cells: [[r, c], ...], colorClass }
+    wsFoundCount: 0,
+    wsSelectedCells: [], // [[r, c], ...]
+    wsStartCell: null, // { r, c }
+    wsIsDragging: false,
+    wsTimer: 0,
+    wsInterval: null
   };
 
   // 4. Main Controller
@@ -247,6 +259,7 @@
       // Switch game mode buttons
       const btnScramble = document.getElementById('game-mode-scramble-btn');
       const btnTriplet = document.getElementById('game-mode-triplet-btn');
+      const btnWordSearch = document.getElementById('game-mode-wordsearch-btn');
 
       if (btnScramble) {
         btnScramble.addEventListener('click', () => {
@@ -256,6 +269,11 @@
       if (btnTriplet) {
         btnTriplet.addEventListener('click', () => {
           this.switchGameMode('triplet');
+        });
+      }
+      if (btnWordSearch) {
+        btnWordSearch.addEventListener('click', () => {
+          this.switchGameMode('wordsearch');
         });
       }
 
@@ -300,36 +318,50 @@
       if (restartTripletBtn) {
         restartTripletBtn.addEventListener('click', () => this.startNewTripletGame());
       }
+
+      // --- Word Search 10x10 Mode Controls ---
+      const restartWsBtn = document.getElementById('ws-restart-btn');
+      const hintWsBtn = document.getElementById('ws-hint-btn');
+      if (restartWsBtn) {
+        restartWsBtn.addEventListener('click', () => this.startNewWordSearchGame());
+      }
+      if (hintWsBtn) {
+        hintWsBtn.addEventListener('click', () => this.giveWordSearchHint());
+      }
     },
 
     switchGameMode(mode) {
       GameState.activeMode = mode;
       const btnScramble = document.getElementById('game-mode-scramble-btn');
       const btnTriplet = document.getElementById('game-mode-triplet-btn');
+      const btnWordSearch = document.getElementById('game-mode-wordsearch-btn');
       const scrambleWrapper = document.getElementById('game-scramble-wrapper');
       const tripletWrapper = document.getElementById('game-triplet-wrapper');
+      const wsWrapper = document.getElementById('game-wordsearch-wrapper');
 
-      if (btnScramble && btnTriplet) {
-        if (mode === 'scramble') {
-          btnScramble.classList.add('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-amber-600', 'dark:text-amber-400');
-          btnScramble.classList.remove('text-slate-600', 'dark:text-slate-400');
-          btnTriplet.classList.remove('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-amber-600', 'dark:text-amber-400');
-          btnTriplet.classList.add('text-slate-600', 'dark:text-slate-400');
-        } else {
-          btnTriplet.classList.add('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-indigo-600', 'dark:text-indigo-400');
-          btnTriplet.classList.remove('text-slate-600', 'dark:text-slate-400');
-          btnScramble.classList.remove('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-indigo-600', 'dark:text-indigo-400');
-          btnScramble.classList.add('text-slate-600', 'dark:text-slate-400');
+      [btnScramble, btnTriplet, btnWordSearch].forEach(b => {
+        if (b) {
+          b.classList.remove('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-emerald-700', 'dark:text-emerald-300', 'text-indigo-600', 'dark:text-indigo-400', 'text-amber-600', 'dark:text-amber-400');
+          b.classList.add('text-white/80');
         }
+      });
+
+      const activeBtn = mode === 'scramble' ? btnScramble : mode === 'triplet' ? btnTriplet : btnWordSearch;
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-emerald-700', 'dark:text-emerald-300');
+        activeBtn.classList.remove('text-white/80');
       }
 
       if (scrambleWrapper) scrambleWrapper.classList.toggle('hidden', mode !== 'scramble');
       if (tripletWrapper) tripletWrapper.classList.toggle('hidden', mode !== 'triplet');
+      if (wsWrapper) wsWrapper.classList.toggle('hidden', mode !== 'wordsearch');
 
       if (mode === 'scramble') {
         this.startNewScrambleRound();
-      } else {
+      } else if (mode === 'triplet') {
         this.startNewTripletGame();
+      } else if (mode === 'wordsearch') {
+        this.startNewWordSearchGame();
       }
     },
 
@@ -826,6 +858,398 @@
       const finalMovesEl = document.getElementById('triplet-final-moves');
       if (finalTimeEl) finalTimeEl.textContent = timeStr;
       if (finalMovesEl) finalMovesEl.textContent = `${GameState.tripletMoves} lượt`;
+    },
+
+    // ==========================================
+    // GAME MODE 3: WORD SEARCH 10x10 (KHOANH CHỮ 10x10)
+    // ==========================================
+    startNewWordSearchGame() {
+      const verbs = window.IRREGULAR_VERBS || [];
+      if (!verbs.length) return;
+
+      // Stop existing timer
+      if (GameState.wsInterval) {
+        clearInterval(GameState.wsInterval);
+      }
+      GameState.wsTimer = 0;
+      GameState.wsFoundCount = 0;
+      GameState.wsSelectedCells = [];
+      GameState.wsStartCell = null;
+      GameState.wsIsDragging = false;
+
+      this.updateWordSearchTimerUI();
+      GameState.wsInterval = setInterval(() => {
+        GameState.wsTimer++;
+        this.updateWordSearchTimerUI();
+      }, 1000);
+
+      // Initialize 10x10 Empty Grid
+      const size = GameState.wsGridSize; // 10
+      const grid = Array.from({ length: size }, () => Array(size).fill(''));
+
+      // Filter good candidate verbs (word length between 3 and 7, no spaces)
+      const pool = verbs.filter(v => {
+        const v1 = v.v1.trim();
+        const v2 = v.v2.split('/')[0].trim();
+        const v3 = v.v3.split('/')[0].trim();
+        return !v1.includes(' ') && !v2.includes(' ') && !v3.includes(' ');
+      }).sort(() => Math.random() - 0.5);
+
+      const WS_COLORS = [
+        'bg-emerald-300/90 dark:bg-emerald-800 text-emerald-950 dark:text-emerald-100 ring-2 ring-emerald-500',
+        'bg-amber-300/90 dark:bg-amber-800 text-amber-950 dark:text-amber-100 ring-2 ring-amber-500',
+        'bg-sky-300/90 dark:bg-sky-800 text-sky-950 dark:text-sky-100 ring-2 ring-sky-500',
+        'bg-rose-300/90 dark:bg-rose-800 text-rose-950 dark:text-rose-100 ring-2 ring-rose-500',
+        'bg-purple-300/90 dark:bg-purple-800 text-purple-950 dark:text-purple-100 ring-2 ring-purple-500',
+        'bg-teal-300/90 dark:bg-teal-800 text-teal-950 dark:text-teal-100 ring-2 ring-teal-500',
+        'bg-orange-300/90 dark:bg-orange-800 text-orange-950 dark:text-orange-100 ring-2 ring-orange-500'
+      ];
+
+      const placedWords = [];
+      const directions = [
+        [0, 1],   // Right
+        [1, 0],   // Down
+        [1, 1],   // Down-Right
+        [-1, 1]   // Up-Right
+      ];
+
+      for (const verb of pool) {
+        if (placedWords.length >= 7) break;
+
+        // Choose random form: V1, V2, or V3
+        const rChoice = Math.random();
+        let wordStr = '';
+        let formName = 'V1';
+        if (rChoice > 0.6) {
+          wordStr = verb.v3.split('/')[0].trim().toUpperCase();
+          formName = 'V3';
+        } else if (rChoice > 0.3) {
+          wordStr = verb.v2.split('/')[0].trim().toUpperCase();
+          formName = 'V2';
+        } else {
+          wordStr = verb.v1.trim().toUpperCase();
+          formName = 'V1';
+        }
+
+        if (wordStr.length < 3 || wordStr.length > 7) continue;
+        if (placedWords.some(w => w.word === wordStr)) continue;
+
+        // Try placing in grid
+        let placed = false;
+        for (let attempt = 0; attempt < 100; attempt++) {
+          const [dr, dc] = directions[Math.floor(Math.random() * directions.length)];
+          const r = Math.floor(Math.random() * size);
+          const c = Math.floor(Math.random() * size);
+
+          const endR = r + dr * (wordStr.length - 1);
+          const endC = c + dc * (wordStr.length - 1);
+
+          if (endR >= 0 && endR < size && endC >= 0 && endC < size) {
+            let canPlace = true;
+            const cells = [];
+            for (let i = 0; i < wordStr.length; i++) {
+              const cr = r + dr * i;
+              const cc = c + dc * i;
+              cells.push([cr, cc]);
+              if (grid[cr][cc] !== '' && grid[cr][cc] !== wordStr[i]) {
+                canPlace = false;
+                break;
+              }
+            }
+
+            if (canPlace) {
+              for (let i = 0; i < wordStr.length; i++) {
+                const [cr, cc] = cells[i];
+                grid[cr][cc] = wordStr[i];
+              }
+
+              placedWords.push({
+                word: wordStr,
+                verb,
+                form: formName,
+                meaning: verb.meaning.split(',')[0],
+                found: false,
+                cells,
+                colorClass: WS_COLORS[placedWords.length % WS_COLORS.length]
+              });
+              placed = true;
+              break;
+            }
+          }
+        }
+      }
+
+      // Fill remaining empty cells with random letters
+      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if (grid[r][c] === '') {
+            grid[r][c] = alphabet[Math.floor(Math.random() * alphabet.length)];
+          }
+        }
+      }
+
+      GameState.wsGrid = grid;
+      GameState.wsWords = placedWords;
+
+      const winCard = document.getElementById('ws-win-card');
+      const gameArea = document.getElementById('ws-active-area');
+      if (winCard) winCard.classList.add('hidden');
+      if (gameArea) gameArea.classList.remove('hidden');
+
+      this.renderWordSearchBoard();
+      this.renderWordSearchList();
+    },
+
+    updateWordSearchTimerUI() {
+      const timerEl = document.getElementById('ws-timer-display');
+      const foundEl = document.getElementById('ws-found-counter');
+      if (timerEl) {
+        const min = Math.floor(GameState.wsTimer / 60);
+        const sec = GameState.wsTimer % 60;
+        timerEl.textContent = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+      }
+      if (foundEl) {
+        foundEl.textContent = `${GameState.wsFoundCount} / ${GameState.wsWords.length} từ`;
+      }
+    },
+
+    renderWordSearchBoard() {
+      const container = document.getElementById('ws-grid-container');
+      if (!container) return;
+
+      const size = GameState.wsGridSize;
+      const grid = GameState.wsGrid;
+
+      // Map found cells to color classes
+      const foundCellMap = new Map();
+      GameState.wsWords.filter(w => w.found).forEach(w => {
+        w.cells.forEach(([r, c]) => {
+          foundCellMap.set(`${r},${c}`, w.colorClass);
+        });
+      });
+
+      const selKeySet = new Set(GameState.wsSelectedCells.map(([r, c]) => `${r},${c}`));
+
+      let html = '';
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          const key = `${r},${c}`;
+          const isSelected = selKeySet.has(key);
+          const foundColor = foundCellMap.get(key);
+
+          let cellClass = 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-indigo-50 dark:hover:bg-slate-700';
+          if (isSelected) {
+            cellClass = 'bg-indigo-600 text-white font-black scale-95 shadow-md ring-2 ring-indigo-400';
+          } else if (foundColor) {
+            cellClass = foundColor + ' font-black';
+          }
+
+          html += `
+            <button class="ws-cell aspect-square rounded-lg sm:rounded-xl border border-slate-200/80 dark:border-slate-700/80 flex items-center justify-center font-bold text-xs sm:text-base select-none transition-all cursor-pointer ${cellClass}"
+                    data-r="${r}" data-c="${c}">
+              ${grid[r][c]}
+            </button>
+          `;
+        }
+      }
+      container.innerHTML = html;
+
+      // Event listeners for cells (Mouse drag & Touch & Two-Click)
+      container.querySelectorAll('.ws-cell').forEach(btn => {
+        const r = parseInt(btn.dataset.r);
+        const c = parseInt(btn.dataset.c);
+
+        btn.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          this.handleWordSearchCellDown(r, c);
+        });
+
+        btn.addEventListener('mouseenter', () => {
+          this.handleWordSearchCellEnter(r, c);
+        });
+
+        btn.addEventListener('mouseup', () => {
+          this.handleWordSearchCellUp();
+        });
+
+        // Touch support
+        btn.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          this.handleWordSearchCellDown(r, c);
+        });
+      });
+
+      // Global mouse up to finish selection if dragged outside grid
+      const handleGlobalUp = () => {
+        if (GameState.wsIsDragging) {
+          this.handleWordSearchCellUp();
+        }
+      };
+      window.removeEventListener('mouseup', handleGlobalUp);
+      window.addEventListener('mouseup', handleGlobalUp);
+    },
+
+    renderWordSearchList() {
+      const container = document.getElementById('ws-word-list-container');
+      if (!container) return;
+
+      container.innerHTML = GameState.wsWords.map(w => {
+        return `
+          <div class="px-3.5 py-2.5 rounded-2xl border transition-all flex items-center justify-between ${w.found ? 'bg-emerald-50 dark:bg-emerald-950/60 border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 line-through opacity-80' : 'bg-slate-50 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100'}">
+            <div class="flex items-center space-x-2">
+              <span class="w-5 h-5 rounded-md flex items-center justify-center text-xs font-bold ${w.found ? 'bg-emerald-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}">
+                ${w.found ? '<i class="fa-solid fa-check text-[10px]"></i>' : w.form}
+              </span>
+              <span class="font-black text-sm tracking-wide">${w.word}</span>
+            </div>
+            <span class="text-xs text-slate-500 dark:text-slate-400 italic">${w.meaning}</span>
+          </div>
+        `;
+      }).join('');
+    },
+
+    handleWordSearchCellDown(r, c) {
+      // If no start cell yet: set start
+      if (!GameState.wsStartCell) {
+        Sound.playPop();
+        GameState.wsStartCell = { r, c };
+        GameState.wsIsDragging = true;
+        GameState.wsSelectedCells = [[r, c]];
+        this.renderWordSearchBoard();
+      } else {
+        // Two-click selection mode: second click
+        const line = this.calculateLine(GameState.wsStartCell.r, GameState.wsStartCell.c, r, c);
+        if (line && line.length > 1) {
+          GameState.wsSelectedCells = line;
+          this.checkWordSearchSelection();
+        } else {
+          // Reset start cell to current
+          Sound.playPop();
+          GameState.wsStartCell = { r, c };
+          GameState.wsIsDragging = true;
+          GameState.wsSelectedCells = [[r, c]];
+          this.renderWordSearchBoard();
+        }
+      }
+    },
+
+    handleWordSearchCellEnter(r, c) {
+      if (!GameState.wsIsDragging || !GameState.wsStartCell) return;
+      const line = this.calculateLine(GameState.wsStartCell.r, GameState.wsStartCell.c, r, c);
+      if (line) {
+        GameState.wsSelectedCells = line;
+        this.renderWordSearchBoard();
+      }
+    },
+
+    handleWordSearchCellUp() {
+      if (!GameState.wsIsDragging) return;
+      GameState.wsIsDragging = false;
+      if (GameState.wsSelectedCells.length > 1) {
+        this.checkWordSearchSelection();
+      }
+    },
+
+    calculateLine(r1, c1, r2, c2) {
+      const dr = r2 - r1;
+      const dc = c2 - c1;
+      const stepR = dr === 0 ? 0 : dr > 0 ? 1 : -1;
+      const stepC = dc === 0 ? 0 : dc > 0 ? 1 : -1;
+
+      const isHoriz = (dr === 0 && dc !== 0);
+      const isVert = (dc === 0 && dr !== 0);
+      const isDiag = (Math.abs(dr) === Math.abs(dc) && dr !== 0);
+
+      if (!isHoriz && !isVert && !isDiag) return null;
+
+      const length = Math.max(Math.abs(dr), Math.abs(dc)) + 1;
+      const cells = [];
+      for (let i = 0; i < length; i++) {
+        cells.push([r1 + stepR * i, c1 + stepC * i]);
+      }
+      return cells;
+    },
+
+    checkWordSearchSelection() {
+      const cells = GameState.wsSelectedCells;
+      if (!cells || cells.length < 2) {
+        GameState.wsStartCell = null;
+        GameState.wsSelectedCells = [];
+        this.renderWordSearchBoard();
+        return;
+      }
+
+      const grid = GameState.wsGrid;
+      const forwardStr = cells.map(([r, c]) => grid[r][c]).join('');
+      const reverseStr = cells.map(([r, c]) => grid[r][c]).reverse().join('');
+
+      // Find matching unfound word
+      const match = GameState.wsWords.find(w => !w.found && (w.word === forwardStr || w.word === reverseStr));
+
+      if (match) {
+        Sound.playCorrect();
+        match.found = true;
+        match.cells = cells;
+        GameState.wsFoundCount++;
+        this.addScore(150);
+        triggerConfetti();
+
+        speak(`${match.word}. ${match.meaning}`);
+
+        GameState.wsStartCell = null;
+        GameState.wsSelectedCells = [];
+        this.updateWordSearchTimerUI();
+        this.renderWordSearchBoard();
+        this.renderWordSearchList();
+
+        if (GameState.wsFoundCount === GameState.wsWords.length) {
+          this.finishWordSearchGame();
+        }
+      } else {
+        Sound.playWrong();
+        GameState.wsStartCell = null;
+        GameState.wsSelectedCells = [];
+        this.renderWordSearchBoard();
+      }
+    },
+
+    giveWordSearchHint() {
+      const unfound = GameState.wsWords.find(w => !w.found);
+      if (!unfound) return;
+
+      Sound.playPop();
+      const [startR, startC] = unfound.cells[0];
+      const cellEl = document.querySelector(`.ws-cell[data-r="${startR}"][data-c="${startC}"]`);
+      if (cellEl) {
+        cellEl.classList.add('ring-4', 'ring-amber-400', 'animate-bounce');
+        setTimeout(() => {
+          cellEl.classList.remove('ring-4', 'ring-amber-400', 'animate-bounce');
+        }, 2000);
+      }
+    },
+
+    finishWordSearchGame() {
+      if (GameState.wsInterval) {
+        clearInterval(GameState.wsInterval);
+      }
+      Sound.playWin();
+      this.addScore(500); // completion bonus
+      triggerConfetti();
+
+      const winCard = document.getElementById('ws-win-card');
+      const gameArea = document.getElementById('ws-active-area');
+      if (gameArea) gameArea.classList.add('hidden');
+      if (winCard) winCard.classList.remove('hidden');
+
+      const min = Math.floor(GameState.wsTimer / 60);
+      const sec = GameState.wsTimer % 60;
+      const timeStr = `${min > 0 ? min + ' phút ' : ''}${sec} giây`;
+
+      const finalTimeEl = document.getElementById('ws-final-time');
+      const finalCountEl = document.getElementById('ws-final-count');
+      if (finalTimeEl) finalTimeEl.textContent = timeStr;
+      if (finalCountEl) finalCountEl.textContent = `${GameState.wsWords.length} / ${GameState.wsWords.length} từ`;
     }
   };
 
