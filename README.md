@@ -28,17 +28,25 @@ Trang web học tập tương tác hiện đại dành cho **đầy đủ 360 đ
    - Mặt sau: Cả 3 cột V1 - V2 - V3, dịch nghĩa, câu ví dụ và dịch nghĩa câu.
    - Nút đánh giá: *Đã thuộc* vs *Cần ôn tập* giúp theo dõi tiến độ học.
 
-3. **Luyện tập Trắc nghiệm (Quiz Mode)**:
+3. **Chuyên đề Ngữ Pháp Chuyên Sâu: 12 Thì & 360 Động Từ Bất Quy Tắc**:
+   - **Ma trận 12 thì tự động (Visual 12 Tenses Conjugator)**: Chọn bất kỳ từ nào trong 360 động từ -> Hệ thống tự động chia đầy đủ 12 thì (Khẳng định, Phủ định, Nghi vấn) kèm câu ví dụ thực tế và phát âm audio.
+   - **Nhấn mạnh vai trò V1 - V2 - V3**:
+     - *Thì Quá khứ đơn*: Bắt buộc dùng **V2 (Past Simple)**.
+     - *Toàn bộ các thì Hoàn thành (Hiện tại, Quá khứ, Tương lai hoàn thành)*: Bắt buộc dùng **V3 (Past Participle)**.
+     - *Các thì Tiếp diễn*: Quy tắc thêm đuôi **V-ing** chuẩn xác.
+   - **Bài kiểm tra 12 Thì & Động từ (Tenses & Verbs Exam)**: Đề thi 10 câu ngẫu nhiên kiểm tra dấu hiệu nhận biết (*yesterday, already, by the time, since, look...*) và phản xạ chia V1/V2/V3 có giải thích ngữ pháp chi tiết.
+
+4. **Luyện tập Trắc nghiệm (Quiz Mode)**:
    - 4 dạng câu hỏi: Tìm V2, Tìm V3, Tìm nghĩa tiếng Việt, Điền từ vào câu ví dụ.
    - Chấm điểm tức thì, chuỗi Streak 🔥, và giải thích chi tiết sau mỗi câu.
 
-4. **Luyện gõ từ vựng (Typing Test)**:
+5. **Luyện gõ từ vựng (Typing Test)**:
    - Hiển thị từ V1 và nghĩa -> người học tự gõ V2 và V3 để rèn phản xạ chính tả.
 
-5. **Phát âm Audio bản ngữ**:
+6. **Phát âm Audio bản ngữ**:
    - Sử dụng Web Speech API chuẩn trình duyệt, hỗ trợ giọng US (Mỹ) và UK (Anh), không lo tốn băng thông hay lỗi kết nối.
 
-6. **Chế độ Sáng / Tối (Dark / Light Mode)** & Tự động lưu tiến độ vào LocalStorage.
+7. **Chế độ Sáng / Tối (Dark / Light Mode)** & Tự động lưu tiến độ vào LocalStorage.
 
 ---
 

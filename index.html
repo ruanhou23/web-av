@@ -133,7 +133,18 @@
             <span>Tra cứu 360 từ</span>
           </button>
 
-          <!-- Tab 2: Flashcards 3D -->
+          <!-- Tab 2: 12 Thì & 360 Từ (NEW) -->
+          <button data-nav-tab="tenses" class="nav-tab-btn px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60 group">
+            <span class="w-6 h-6 rounded-lg bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-white shadow-xs">
+              <i class="fa-solid fa-clock-rotate-left text-xs"></i>
+            </span>
+            <span class="font-bold">12 Thì & 360 Từ</span>
+            <span class="px-1.5 py-0.2 text-[9px] font-extrabold rounded-md bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300">
+              Mới
+            </span>
+          </button>
+
+          <!-- Tab 3: Flashcards 3D -->
           <button data-nav-tab="flashcards" class="nav-tab-btn px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60">
             <span class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-500">
               <i class="fa-solid fa-clone text-xs"></i>
@@ -332,6 +343,284 @@
         <button id="load-more-btn" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-lg shadow-blue-500/20 transition-all btn-press">
           Xem thêm 36 từ tiếp theo
         </button>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW: 12 THÌ & 360 ĐỘNG TỪ BẤT QUY TẮC -->
+    <!-- ========================================== -->
+    <section id="tenses-view" class="hidden space-y-8">
+      
+      <!-- Hero Banner & Sub-View Switcher -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-amber-500 via-rose-600 to-indigo-700 text-white p-6 sm:p-10 shadow-xl shadow-rose-500/10">
+        <div class="relative z-10 max-w-3xl space-y-4">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-black/20 backdrop-blur-md text-xs font-bold text-amber-200 border border-white/20">
+            <i class="fa-solid fa-clock-rotate-left text-amber-300"></i>
+            <span>Ngữ pháp chuyên sâu: Kết hợp 12 thì & 360 Động từ bất quy tắc</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+            12 Thì Tiếng Anh & Động Từ Bất Quy Tắc
+          </h2>
+          <p class="text-rose-100 text-sm sm:text-base leading-relaxed max-w-2xl font-medium">
+            Khám phá quy tắc biến đổi của mọi động từ bất quy tắc (V1, V2, V3, V-ing) qua đầy đủ 12 thì trong tiếng Anh, học qua ví dụ trực quan và rèn luyện phản xạ với bài kiểm tra chuyên sâu.
+          </p>
+
+          <!-- Sub-View Switcher: Bài học ma trận vs Bài kiểm tra trắc nghiệm -->
+          <div class="pt-2 flex items-center gap-2 flex-wrap">
+            <div class="inline-flex p-1.5 rounded-2xl bg-black/30 backdrop-blur-md border border-white/20 shadow-inner">
+              <button id="tenses-subview-visual-btn" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-indigo-700 shadow-sm transition-all flex items-center space-x-2">
+                <i class="fa-solid fa-table-cells-large"></i>
+                <span>Ma Trận 12 Thì Trực Quan</span>
+              </button>
+              <button id="tenses-subview-quiz-btn" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white/80 hover:text-white transition-all flex items-center space-x-2">
+                <i class="fa-solid fa-brain"></i>
+                <span>Bài Kiểm Tra 12 Thì & V1-V2-V3</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Decorative background elements -->
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute right-12 top-6 text-white/10 text-9xl font-black pointer-events-none hidden lg:block select-none">
+          12T
+        </div>
+      </div>
+
+      <!-- SUB-VIEW 1: MA TRẬN 12 THÌ & VERB CONJUGATOR -->
+      <div id="tenses-visual-wrapper" class="space-y-6">
+        
+        <!-- Verb Selection & Search Bar -->
+        <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-base sm:text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i>
+                <span>Chọn Động Từ Bất Quy Tắc Để Chia 12 Thì</span>
+              </h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Tìm kiếm trong 360 động từ hoặc bấm chọn nhanh các từ thông dụng bên dưới</p>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+              <!-- Live Search Box with Dropdown -->
+              <div class="relative w-full sm:w-72">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                </div>
+                <input type="text" id="tenses-verb-search"
+                       placeholder="Gõ từ (vd: write, go, see...)"
+                       class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 border border-slate-200/80 dark:border-slate-700 transition-all">
+                
+                <!-- Search Autocomplete Dropdown -->
+                <div id="tenses-search-results" class="hidden absolute top-full left-0 right-0 mt-1 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden z-30 max-h-60 overflow-y-auto"></div>
+              </div>
+
+              <!-- Random Verb Button -->
+              <button id="tenses-random-verb-btn" class="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white text-xs font-bold transition-all shadow-md shadow-indigo-500/20 btn-press flex items-center gap-1.5 whitespace-nowrap" title="Chọn ngẫu nhiên một động từ">
+                <i class="fa-solid fa-shuffle"></i>
+                <span>Từ ngẫu nhiên</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Popular Shortcut Chips -->
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Động từ thông dụng:</div>
+            <div id="tenses-popular-shortcuts" class="flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+
+        <!-- Active Verb Showcase Card -->
+        <div class="bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-indigo-500/20 relative overflow-hidden">
+          <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            
+            <!-- Verb Info Left -->
+            <div class="space-y-2">
+              <div class="flex items-center space-x-3">
+                <span id="tenses-hero-icon" class="text-4xl sm:text-5xl">📖</span>
+                <div>
+                  <div class="flex items-center space-x-3">
+                    <h3 id="tenses-hero-title" class="text-3xl sm:text-4xl font-black tracking-tight text-white">WRITE</h3>
+                    <span id="tenses-hero-ipa" class="text-xs sm:text-sm font-mono-ipa text-indigo-300 bg-indigo-950/80 px-2.5 py-1 rounded-lg border border-indigo-700/50">/raɪt/</span>
+                  </div>
+                  <p id="tenses-hero-meaning" class="text-sm sm:text-base font-semibold text-slate-300 mt-1">viết, sáng tác</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Verb 5 Forms Pills Right -->
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+              
+              <!-- V1 (Base) -->
+              <div class="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10 text-center relative group">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">V1 (Nguyên thể)</span>
+                <span id="tenses-hero-v1" class="text-base font-black text-white block">write</span>
+                <button data-tense-speak="v1" class="mt-1 text-xs text-indigo-300 hover:text-white transition-colors" title="Nghe phát âm">
+                  <i class="fa-solid fa-volume-high"></i>
+                </button>
+              </div>
+
+              <!-- V2 (Past Simple) -->
+              <div class="bg-rose-500/20 backdrop-blur-md rounded-2xl p-3 border border-rose-500/30 text-center relative group">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-rose-300 block mb-0.5">V2 (Quá khứ)</span>
+                <span id="tenses-hero-v2" class="text-base font-black text-rose-200 block">wrote</span>
+                <button data-tense-speak="v2" class="mt-1 text-xs text-rose-300 hover:text-white transition-colors" title="Nghe phát âm">
+                  <i class="fa-solid fa-volume-high"></i>
+                </button>
+              </div>
+
+              <!-- V3 (Past Participle) -->
+              <div class="bg-amber-500/20 backdrop-blur-md rounded-2xl p-3 border border-amber-500/30 text-center relative group">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-300 block mb-0.5">V3 (Phân từ 2)</span>
+                <span id="tenses-hero-v3" class="text-base font-black text-amber-200 block">written</span>
+                <button data-tense-speak="v3" class="mt-1 text-xs text-amber-300 hover:text-white transition-colors" title="Nghe phát âm">
+                  <i class="fa-solid fa-volume-high"></i>
+                </button>
+              </div>
+
+              <!-- V-ing (Continuous) -->
+              <div class="bg-emerald-500/20 backdrop-blur-md rounded-2xl p-3 border border-emerald-500/30 text-center relative group">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-300 block mb-0.5">V-ing (Tiếp diễn)</span>
+                <span id="tenses-hero-ving" class="text-base font-black text-emerald-200 block">writing</span>
+                <button data-tense-speak="ving" class="mt-1 text-xs text-emerald-300 hover:text-white transition-colors" title="Nghe phát âm">
+                  <i class="fa-solid fa-volume-high"></i>
+                </button>
+              </div>
+
+              <!-- V-s/es -->
+              <div class="bg-sky-500/20 backdrop-blur-md rounded-2xl p-3 border border-sky-500/30 text-center relative group col-span-2 sm:col-span-1">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-sky-300 block mb-0.5">V-s/es (Ngôi 3 số ít)</span>
+                <span id="tenses-hero-vses" class="text-base font-black text-sky-200 block">writes</span>
+                <span class="mt-1 text-xs text-sky-300/80 block">Hiện tại đơn</span>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Subtext Alert -->
+          <div class="relative z-10 mt-5 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-slate-300 gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span><strong>Mẹo ghi nhớ:</strong> V2 chỉ dùng duy nhất trong thì <em>Quá khứ đơn</em> (+). V3 bắt buộc dùng trong toàn bộ <em>các thì Hoàn thành</em> (Present, Past, Future Perfect)!</span>
+            </div>
+            <span class="text-[11px] text-amber-300 font-bold bg-amber-950/60 px-2 py-0.5 rounded border border-amber-600/40">12 Thì tự động cập nhật bên dưới ↓</span>
+          </div>
+        </div>
+
+        <!-- Filter Pills for the 12 Tenses -->
+        <div class="flex items-center space-x-2 overflow-x-auto py-2 no-scrollbar">
+          <button data-tense-group="all" class="px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-md transition-all whitespace-nowrap">
+            Tất cả 12 thì
+          </button>
+          <button data-tense-group="present" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-700 transition-all whitespace-nowrap">
+            ☀️ Hiện tại (4 thì)
+          </button>
+          <button data-tense-group="past" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-700 transition-all whitespace-nowrap">
+            ⏪ Quá khứ (4 thì)
+          </button>
+          <button data-tense-group="future" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-700 transition-all whitespace-nowrap">
+            🚀 Tương lai (4 thì)
+          </button>
+          <button data-tense-group="perfect" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-700 transition-all whitespace-nowrap">
+            🌟 Nhóm thì dùng V3 (Hoàn thành)
+          </button>
+          <button data-tense-group="continuous" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-700 transition-all whitespace-nowrap">
+            🔄 Nhóm thì Tiếp diễn (V-ing)
+          </button>
+          <button data-tense-group="simple" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-slate-700 transition-all whitespace-nowrap">
+            ⚡ Nhóm thì Đơn (V1, V2)
+          </button>
+        </div>
+
+        <!-- Cards Grid: 12 Tenses -->
+        <div id="tenses-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      </div>
+
+      <!-- SUB-VIEW 2: BÀI KIỂM TRA 12 THÌ & V1-V2-V3 -->
+      <div id="tenses-quiz-wrapper" class="hidden max-w-2xl mx-auto space-y-6">
+        
+        <!-- Active Quiz Question Card -->
+        <div id="tenses-quiz-active-card" class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-xl space-y-6">
+          
+          <!-- Top Bar -->
+          <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center space-x-2">
+              <span id="tenses-quiz-progress-text" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
+                Câu 1 / 10
+              </span>
+              <span class="text-slate-300 dark:text-slate-700">•</span>
+              <span id="tenses-quiz-tense-badge" class="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300">
+                Quá khứ đơn
+              </span>
+            </div>
+            <div class="flex items-center space-x-4 text-xs font-bold">
+              <span id="tenses-quiz-score" class="text-emerald-600 dark:text-emerald-400">Điểm: 0</span>
+              <span id="tenses-quiz-streak" class="text-amber-500"><i class="fa-solid fa-fire mr-1"></i>Streak: 0</span>
+            </div>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+            <div id="tenses-quiz-bar" class="h-full bg-gradient-to-r from-amber-500 to-rose-600 transition-all duration-300" style="width: 10%"></div>
+          </div>
+
+          <!-- Prompt Question -->
+          <div class="space-y-2">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Điền dạng đúng của động từ theo thì thích hợp:</div>
+            <p id="tenses-quiz-prompt" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-relaxed">
+              Yesterday, he ________ (go) to the supermarket.
+            </p>
+          </div>
+
+          <!-- Options Container -->
+          <div id="tenses-quiz-options-container" class="space-y-3 pt-2"></div>
+
+          <!-- Explanation Box (Appears after answer) -->
+          <div id="tenses-quiz-explanation" class="hidden p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-3 animate-fade-in">
+            <div id="tenses-quiz-expl-verdict" class="text-sm"></div>
+            <div id="tenses-quiz-expl-rule" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed"></div>
+            <div class="pt-2 flex justify-end">
+              <button id="tenses-quiz-next-btn" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all shadow-md shadow-indigo-500/20 btn-press flex items-center space-x-1.5">
+                <span>Câu tiếp theo</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Result Card -->
+        <div id="tenses-quiz-result-card" class="hidden bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200/80 dark:border-slate-800 shadow-2xl text-center space-y-6">
+          <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-500 to-rose-500 text-white flex items-center justify-center mx-auto text-4xl shadow-xl shadow-rose-500/30 animate-gentle-bounce">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+          <div>
+            <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">Hoàn Thành Bài Kiểm Tra 12 Thì!</h3>
+            <p id="tenses-quiz-final-message" class="text-sm text-slate-500 dark:text-slate-400 mt-2 font-medium"></p>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4 max-w-xs mx-auto">
+            <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-slate-800 border border-indigo-100 dark:border-slate-700">
+              <span class="text-xs text-slate-400 font-bold block mb-1">Tổng điểm</span>
+              <span id="tenses-quiz-final-score" class="text-2xl font-black text-indigo-600 dark:text-indigo-400">0 / 100</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-slate-800 border border-emerald-100 dark:border-slate-700">
+              <span class="text-xs text-slate-400 font-bold block mb-1">Tỷ lệ đúng</span>
+              <span id="tenses-quiz-final-percent" class="text-2xl font-black text-emerald-600 dark:text-emerald-400">0%</span>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button id="tenses-quiz-restart-btn" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold text-sm shadow-xl shadow-indigo-500/25 transition-all btn-press inline-flex items-center space-x-2">
+              <i class="fa-solid fa-rotate-right"></i>
+              <span>Làm Đề Kiểm Tra Mới</span>
+            </button>
+          </div>
+        </div>
+
       </div>
 
     </section>
@@ -1370,6 +1659,7 @@
   <script src="verbs_data.js"></script>
   <script src="it_terms_data.js"></script>
   <script src="it_app.js"></script>
+  <script src="tenses_app.js"></script>
   <script src="app.js"></script>
 
 </body>
