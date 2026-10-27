@@ -1,12 +1,17 @@
-# 📚 Trang Web Học 360 Động Từ Bất Quy Tắc Tiếng Anh Toàn Diện
+# 📚 Luyện Tiếng Anh Mỗi Ngày - 360 Động Từ Bất Quy Tắc & 1,000 Từ CNTT
 
-Trang web học tập tương tác hiện đại dành cho **đầy đủ 360 động từ bất quy tắc tiếng Anh**, được xây dựng dựa trên bảng chuẩn 12 trang:
+> 🌐 **Link trực tiếp trên GitHub Pages**: [**https://ruanhou23.github.io/web-av/**](https://ruanhou23.github.io/web-av/)  
+> 🔗 **Kho lưu trữ GitHub Repository**: [https://github.com/ruanhou23/web-av](https://github.com/ruanhou23/web-av)
+
+Trang web học tập tương tác hiện đại dành cho **đầy đủ 360 động từ bất quy tắc tiếng Anh** và **1,000 thuật ngữ CNTT cốt lõi**, tích hợp **12 thì tiếng Anh trực quan** cùng **Trung tâm trò chơi giải đố Puzzle**:
 - **Nguyên thể (V1), Quá khứ (V2), Quá khứ phân từ (V3)**
 - **Phiên âm quốc tế chuẩn IPA**
 - **Dịch nghĩa tiếng Việt chính xác**
 - **Ví dụ câu ngữ cảnh tiếng Anh tự nhiên kèm dịch nghĩa tiếng Việt**
 - **Hình ảnh minh họa chất lượng cao** cho toàn bộ 360 từ
 - **Hệ thống phát âm bản ngữ (Web Speech API)** cho cả 3 dạng và câu ví dụ
+- **Chuyên đề kết hợp 12 thì trong tiếng Anh và 360 động từ bất quy tắc**
+- **Trung tâm trò chơi Puzzle**: Word Scramble, Triplet Match và Khoanh Chữ Ma Trận 10x10
 
 ---
 
@@ -66,16 +71,20 @@ Trang web học tập tương tác hiện đại dành cho **đầy đủ 360 đ
 
 ## 🛠️ Hướng Dẫn Sử Dụng & Khởi Chạy
 
-Bạn có thể mở ứng dụng theo 2 cách cực kỳ đơn giản:
+Bạn có thể trải nghiệm ứng dụng theo các cách sau:
 
-### Cách 1: Chạy trực tiếp bằng Python
+### Cách 1: Truy cập trực tiếp qua GitHub Pages (Khuyến nghị)
+👉 Nhấp vào liên kết: [**https://ruanhou23.github.io/web-av/**](https://ruanhou23.github.io/web-av/)  
+Không cần cài đặt, hoạt động mượt mà trên cả máy tính, máy tính bảng và điện thoại di động.
+
+### Cách 2: Chạy trực tiếp bằng Python
 Trong thư mục dự án, chạy lệnh:
 ```bash
 python3 start.py
 ```
 Sau đó mở trình duyệt tại: `http://localhost:8000/index.html`
 
-### Cách 2: Mở trực tiếp tệp HTML
+### Cách 3: Mở trực tiếp tệp HTML
 Bạn có thể mở trực tiếp tệp `index.html` bằng bất kỳ trình duyệt nào (Chrome, Edge, Firefox, Safari) mà không cần cài đặt thêm bất kỳ phần mềm nào.
 
 ---
@@ -85,8 +94,11 @@ Bạn có thể mở trực tiếp tệp `index.html` bằng bất kỳ trình d
 ```
 irregular-verbs-360/
 ├── index.html              # Giao diện chính (HTML5 + Tailwind CSS + FontAwesome)
-├── style.css               # Hiệu ứng 3D Flashcard, font chữ, animations
-├── app.js                  # Toàn bộ logic ứng dụng động từ bất quy tắc
+├── style.css               # Hiệu ứng 3D Flashcard, game tiles, font chữ, animations
+├── favicon.svg             # Biểu tượng Favicon của trang web
+├── app.js                  # Điều hướng chính & logic động từ bất quy tắc
+├── tenses_app.js           # Module 12 thì ngữ pháp & ma trận chia thì 360 từ
+├── game_app.js             # Trung tâm trò chơi (Word Scramble, Triplet Match, Word Search 10x10)
 ├── verbs_data.js           # Dữ liệu 360 động từ (JavaScript)
 ├── verbs_data.json         # Dữ liệu 360 động từ (JSON)
 ├── it_app.js               # Logic điều khiển danh mục Tiếng Anh CNTT (1,000 thuật ngữ)
@@ -104,7 +116,7 @@ irregular-verbs-360/
 ├── domain_10_qa_workplace.py  # Dữ liệu 100 thuật ngữ QA, Kiểm thử, Agile & Workplace
 ├── compile_1000_it_database.py # Script biên dịch & đồng bộ 1,000 thuật ngữ
 ├── start.py                # Máy chủ cục bộ mở nhanh trên trình duyệt
-└── README.md               # Tài liệu hướng dẫn
+└── README.md               # Tài liệu hướng dẫn & Link GitHub Pages
 ```
 
 ---
