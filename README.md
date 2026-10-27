@@ -36,17 +36,27 @@ Trang web học tập tương tác hiện đại dành cho **đầy đủ 360 đ
      - *Các thì Tiếp diễn*: Quy tắc thêm đuôi **V-ing** chuẩn xác.
    - **Bài kiểm tra 12 Thì & Động từ (Tenses & Verbs Exam)**: Đề thi 10 câu ngẫu nhiên kiểm tra dấu hiệu nhận biết (*yesterday, already, by the time, since, look...*) và phản xạ chia V1/V2/V3 có giải thích ngữ pháp chi tiết.
 
-4. **Luyện tập Trắc nghiệm (Quiz Mode)**:
+4. **Trung Tâm Trò Chơi Puzzle (Interactive Puzzle Game Center)**:
+   - **Chế độ 1: Word Scramble Puzzle (Ghép chữ cái giải đố V1-V2-V3)**:
+     - Các mảnh ghép chữ cái bị xáo trộn, người chơi nhấp chuột hoặc gõ bàn phím để ghép thành dạng V2/V3 chính xác.
+     - Hỗ trợ công cụ: Gợi ý chữ cái 💡, Xáo trộn lại 🔀, Xóa chữ ↩️, Bỏ qua ⏩.
+     - Tích hợp hiệu ứng âm thanh Web Audio API (chime, pop, error) và pháo hoa hạt hạt confetti rực rỡ.
+   - **Chế độ 2: Triplet Match Puzzle (Nối bộ ba siêu tốc V1 - V2 - V3)**:
+     - Bảng lưới 12 mảnh ghép puzzle (4 động từ x 3 dạng V1, V2, V3).
+     - Người chơi nhấp chọn 3 mảnh ghép thuộc cùng 1 động từ để loại bỏ các ô và nhận điểm thưởng combo.
+     - Đồng hồ đếm thời gian phá kỷ lục và bảng xếp hạng High Score.
+
+5. **Luyện tập Trắc nghiệm (Quiz Mode)**:
    - 4 dạng câu hỏi: Tìm V2, Tìm V3, Tìm nghĩa tiếng Việt, Điền từ vào câu ví dụ.
    - Chấm điểm tức thì, chuỗi Streak 🔥, và giải thích chi tiết sau mỗi câu.
 
-5. **Luyện gõ từ vựng (Typing Test)**:
+6. **Luyện gõ từ vựng (Typing Test)**:
    - Hiển thị từ V1 và nghĩa -> người học tự gõ V2 và V3 để rèn phản xạ chính tả.
 
-6. **Phát âm Audio bản ngữ**:
+7. **Phát âm Audio bản ngữ**:
    - Sử dụng Web Speech API chuẩn trình duyệt, hỗ trợ giọng US (Mỹ) và UK (Anh), không lo tốn băng thông hay lỗi kết nối.
 
-7. **Chế độ Sáng / Tối (Dark / Light Mode)** & Tự động lưu tiến độ vào LocalStorage.
+8. **Chế độ Sáng / Tối (Dark / Light Mode)** & Tự động lưu tiến độ vào LocalStorage.
 
 ---
 

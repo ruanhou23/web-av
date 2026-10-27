@@ -495,7 +495,7 @@
       });
 
       // Show/Hide Section Views
-      const views = ['explorer-view', 'tenses-view', 'flashcards-view', 'quiz-view', 'typing-view', 'patterns-view', 'it-english-view'];
+      const views = ['explorer-view', 'tenses-view', 'games-view', 'flashcards-view', 'quiz-view', 'typing-view', 'patterns-view', 'it-english-view'];
       views.forEach(v => {
         const el = document.getElementById(v);
         if (el) el.classList.add('hidden');
@@ -509,6 +509,8 @@
         this.renderExplorer();
       } else if (tabName === 'tenses') {
         if (window.TensesApp) window.TensesApp.init();
+      } else if (tabName === 'games') {
+        if (window.GameApp) window.GameApp.init();
       } else if (tabName === 'flashcards') {
         this.initFlashcards();
       } else if (tabName === 'quiz') {

@@ -144,7 +144,18 @@
             </span>
           </button>
 
-          <!-- Tab 3: Flashcards 3D -->
+          <!-- Tab 3: Trò Chơi Puzzle (NEW) -->
+          <button data-nav-tab="games" class="nav-tab-btn px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60 group">
+            <span class="w-6 h-6 rounded-lg bg-gradient-to-tr from-emerald-500 to-teal-500 flex items-center justify-center text-white shadow-xs">
+              <i class="fa-solid fa-gamepad text-xs"></i>
+            </span>
+            <span class="font-bold">Trò Chơi Puzzle</span>
+            <span class="px-1.5 py-0.2 text-[9px] font-extrabold rounded-md bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300">
+              Game
+            </span>
+          </button>
+
+          <!-- Tab 4: Flashcards 3D -->
           <button data-nav-tab="flashcards" class="nav-tab-btn px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 flex items-center space-x-2 whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60">
             <span class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-indigo-500">
               <i class="fa-solid fa-clone text-xs"></i>
@@ -617,6 +628,198 @@
             <button id="tenses-quiz-restart-btn" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold text-sm shadow-xl shadow-indigo-500/25 transition-all btn-press inline-flex items-center space-x-2">
               <i class="fa-solid fa-rotate-right"></i>
               <span>Làm Đề Kiểm Tra Mới</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW: TRUNG TÂM TRÒ CHƠI PUZZLE TIẾNG ANH -->
+    <!-- ========================================== -->
+    <section id="games-view" class="hidden space-y-8 relative">
+      <canvas id="game-confetti-canvas" class="absolute inset-0 pointer-events-none z-50 w-full h-full"></canvas>
+
+      <!-- Hero Banner & Stats Bar -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-700 text-white p-6 sm:p-10 shadow-xl shadow-emerald-500/10">
+        <div class="relative z-10 max-w-3xl space-y-4">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-black/20 backdrop-blur-md text-xs font-bold text-emerald-200 border border-white/20">
+            <i class="fa-solid fa-gamepad text-emerald-300"></i>
+            <span>Vừa chơi vừa học: Thử thách phản xạ từ vựng & ngữ pháp</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+            Trung Tâm Trò Chơi Puzzle
+          </h2>
+          <p class="text-emerald-100 text-sm sm:text-base leading-relaxed max-w-2xl font-medium">
+            Rèn luyện trí nhớ và phản xạ chính tả qua các thử thách ghép chữ cái (Word Scramble) và ghép nối siêu tốc bộ ba V1 - V2 - V3 (Triplet Match).
+          </p>
+
+          <!-- Top Game Stats & Switcher -->
+          <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            
+            <!-- Game Mode Switcher -->
+            <div class="inline-flex p-1.5 rounded-2xl bg-black/30 backdrop-blur-md border border-white/20 shadow-inner">
+              <button id="game-mode-scramble-btn" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-emerald-700 shadow-sm transition-all flex items-center space-x-2">
+                <i class="fa-solid fa-puzzle-piece"></i>
+                <span>Word Scramble (Ghép Chữ)</span>
+              </button>
+              <button id="game-mode-triplet-btn" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white/80 hover:text-white transition-all flex items-center space-x-2">
+                <i class="fa-solid fa-shapes"></i>
+                <span>Triplet Match (Nối Bộ Ba)</span>
+              </button>
+            </div>
+
+            <!-- Score / Streak Badge -->
+            <div class="flex items-center space-x-3 bg-black/30 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 text-xs font-bold">
+              <div class="flex items-center space-x-1.5 text-amber-300">
+                <i class="fa-solid fa-trophy text-sm"></i>
+                <span>Điểm: <strong id="game-score-display" class="text-white text-sm">0</strong></span>
+              </div>
+              <span class="text-white/30">|</span>
+              <div id="game-streak-display" class="text-rose-300">
+                <i class="fa-solid fa-fire mr-1"></i>Streak: 0
+              </div>
+              <span class="text-white/30">|</span>
+              <div id="game-highscore-display" class="text-emerald-300">
+                Kỷ lục: 0
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Decorative background elements -->
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute right-12 top-6 text-white/10 text-9xl font-black pointer-events-none hidden lg:block select-none">
+          GAME
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- GAME 1: WORD SCRAMBLE PUZZLE -->
+      <!-- ========================================== -->
+      <div id="game-scramble-wrapper" class="max-w-3xl mx-auto space-y-6">
+        
+        <!-- Question Clue Box -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-lg text-center space-y-4">
+          
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 text-xs font-bold">
+            <span>Yêu cầu tìm:</span>
+            <span id="scramble-target-label" class="text-rose-600 dark:text-rose-400 font-extrabold uppercase">V2 (Quá khứ đơn)</span>
+          </div>
+
+          <!-- Prompt Word & Meaning -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-center space-x-3">
+              <span id="scramble-icon-display" class="text-4xl sm:text-5xl">📖</span>
+              <h3 id="scramble-v1-display" class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">WRITE</h3>
+              <span id="scramble-ipa-display" class="text-xs font-mono-ipa text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg">/raɪt/</span>
+            </div>
+            <p id="scramble-meaning-display" class="text-base font-semibold text-slate-600 dark:text-slate-300 pt-1">viết, sáng tác</p>
+          </div>
+
+          <p class="text-xs text-slate-400 dark:text-slate-500 italic">
+            Nhấp vào các chữ cái bên dưới hoặc gõ trực tiếp từ bàn phím để ghép thành từ đúng:
+          </p>
+
+          <!-- Answer Slots Container -->
+          <div class="pt-4 pb-2">
+            <div id="scramble-slots-container" class="flex items-center justify-center gap-2 sm:gap-3 flex-wrap min-h-[70px]"></div>
+          </div>
+
+          <!-- Scrambled Tiles Pool -->
+          <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3">Mảnh ghép chữ cái xáo trộn:</div>
+            <div id="scramble-tiles-container" class="flex items-center justify-center gap-2 sm:gap-3 flex-wrap"></div>
+          </div>
+
+          <!-- Action Controls & Hints -->
+          <div class="pt-4 flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+            <button id="scramble-hint-btn" class="px-4 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/60 dark:hover:bg-amber-900/60 text-amber-700 dark:text-amber-300 text-xs font-bold transition-all border border-amber-300 dark:border-amber-700 btn-press flex items-center space-x-1.5" title="Điền sẵn 1 chữ cái">
+              <i class="fa-solid fa-lightbulb"></i>
+              <span>Gợi ý</span>
+            </button>
+            <button id="scramble-shuffle-btn" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all border border-slate-200 dark:border-slate-700 btn-press flex items-center space-x-1.5" title="Xáo trộn lại các chữ cái">
+              <i class="fa-solid fa-shuffle"></i>
+              <span>Xáo trộn</span>
+            </button>
+            <button id="scramble-clear-btn" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all border border-slate-200 dark:border-slate-700 btn-press flex items-center space-x-1.5" title="Thu hồi toàn bộ chữ về khay">
+              <i class="fa-solid fa-rotate-left"></i>
+              <span>Xóa hết</span>
+            </button>
+            <button id="scramble-skip-btn" class="px-4 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/60 dark:hover:bg-rose-900/60 text-rose-700 dark:text-rose-300 text-xs font-bold transition-all border border-rose-200 dark:border-rose-800 btn-press flex items-center space-x-1.5" title="Bỏ qua từ này để sang từ mới">
+              <i class="fa-solid fa-forward-step"></i>
+              <span>Bỏ qua</span>
+            </button>
+          </div>
+
+          <!-- Feedback Banner -->
+          <div id="scramble-feedback" class="min-h-[32px] flex items-center justify-center"></div>
+
+        </div>
+
+      </div>
+
+      <!-- ========================================== -->
+      <!-- GAME 2: TRIPLET MATCH PUZZLE -->
+      <!-- ========================================== -->
+      <div id="game-triplet-wrapper" class="hidden max-w-4xl mx-auto space-y-6">
+        
+        <!-- Controls & Timer Bar -->
+        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center space-x-2 text-xs font-bold text-slate-600 dark:text-slate-300">
+            <span class="px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+              Luật chơi:
+            </span>
+            <span>Chọn đủ bộ 3 thẻ (<span class="text-blue-600 font-extrabold">V1</span> - <span class="text-rose-600 font-extrabold">V2</span> - <span class="text-amber-600 font-extrabold">V3</span>) của cùng 1 động từ để ăn điểm!</span>
+          </div>
+
+          <div class="flex items-center space-x-4 self-end sm:self-auto">
+            <div class="flex items-center space-x-1.5 text-xs font-bold text-slate-700 dark:text-slate-200">
+              <i class="fa-solid fa-stopwatch text-indigo-500 text-sm"></i>
+              <span id="triplet-timer-display" class="font-mono text-sm">00:00</span>
+            </div>
+            <div class="flex items-center space-x-1.5 text-xs font-bold text-slate-500 dark:text-slate-400">
+              <i class="fa-solid fa-arrow-pointer"></i>
+              <span id="triplet-moves-display">0 lượt</span>
+            </div>
+            <button id="triplet-restart-btn" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition-all btn-press flex items-center space-x-1">
+              <i class="fa-solid fa-rotate-right"></i>
+              <span>Ván mới</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 12 Tiles Board Grid (4 verbs x 3 forms = 12 cards) -->
+        <div id="triplet-board-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4"></div>
+
+        <!-- Victory Screen for Triplet Game -->
+        <div id="triplet-win-card" class="hidden bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 border border-slate-200/80 dark:border-slate-800 shadow-2xl text-center space-y-6 animate-pop">
+          <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-500 text-white flex items-center justify-center mx-auto text-5xl shadow-2xl shadow-emerald-500/30 animate-gentle-bounce">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+          <div>
+            <h3 class="text-3xl font-black text-slate-900 dark:text-white">Xuất Sắc! Hoàn Thành Ghép Bộ Ba!</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 font-medium">Bạn đã tìm đúng toàn bộ 4 bộ ba V1 - V2 - V3 của các động từ bất quy tắc!</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 max-w-xs mx-auto">
+            <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-slate-800 border border-indigo-100 dark:border-slate-700">
+              <span class="text-xs text-slate-400 font-bold block mb-1">Thời gian</span>
+              <span id="triplet-final-time" class="text-xl font-black text-indigo-600 dark:text-indigo-400">00:00</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-slate-800 border border-emerald-100 dark:border-slate-700">
+              <span class="text-xs text-slate-400 font-bold block mb-1">Số lượt chọn</span>
+              <span id="triplet-final-moves" class="text-xl font-black text-emerald-600 dark:text-emerald-400">0 lượt</span>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button onclick="window.GameApp.startNewTripletGame()" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm shadow-xl shadow-emerald-500/25 transition-all btn-press inline-flex items-center space-x-2">
+              <i class="fa-solid fa-rotate-right"></i>
+              <span>Chơi Tiếp Ván Mới</span>
             </button>
           </div>
         </div>
@@ -1660,6 +1863,7 @@
   <script src="it_terms_data.js"></script>
   <script src="it_app.js"></script>
   <script src="tenses_app.js"></script>
+  <script src="game_app.js"></script>
   <script src="app.js"></script>
 
 </body>
